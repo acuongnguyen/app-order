@@ -9,16 +9,16 @@ export type foodItemsStatic = {
   items: foodItemStatic[];
 }
 export type FoodItem = {
-    id: number;
-    name: string;
-    description?: string;
-    isPopularFood: boolean;
-    price: string;
-    createdAt: string;
-    updatedAt: string;
-    imageUrl: string;
-    status: string;
-    categoryId: string;
+  id: number;
+  name: string;
+  description?: string;
+  isPopularFood: boolean;
+  price: string;
+  createdAt: string;
+  updatedAt: string;
+  imageUrl: string;
+  status: string;
+  categoryId: string;
 };
 
 export type FoodItems = {
@@ -29,7 +29,7 @@ export type FoodCategory = {
   id: number;
   name: string;
   urlParam: string;
-  icon?: JSX.Element
+  imageUrl: string
 }
 
 export type cartItem = {
@@ -46,7 +46,7 @@ export type cartItems = {
 export type User = {
   uid: string;
   email?: string;
-  displayName?:string;
+  displayName?: string;
   phoneNumber?: string;
   providerId: string;
   photoURL?: string;

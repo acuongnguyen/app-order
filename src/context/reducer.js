@@ -1,6 +1,7 @@
 export const actionTypes = {
     SET_USER: 'SET_USER',
     SET_FOOD_ITEMS: 'SET_FOOD_ITEMS',
+    SET_CATEGORY: 'SET_CATEGORY',
     TOGGLE_CART: 'TOGGLE_CART',
     SET_CARTITEMS: 'SET_CARTITEMS',
     SET_ORDERITEMS: 'SET_ORDERITEMS',
@@ -16,6 +17,7 @@ export const actionTypes = {
     TOGGLE_ORDER: 'TOGGLE_ORDER',
     TOGGLE_MOBILE_NAV: 'TOGGLE_MOBILE_NAV',
     ADD_TO_ORDER: 'ADD_TO_ORDER',
+    SET_FILTER: 'SET_FILTER',
 }
 
 const reducer = (state, action) => {
@@ -31,6 +33,11 @@ const reducer = (state, action) => {
                 ...state,
                 foodItems: action.foodItems,
             };
+        case actionTypes.SET_CATEGORY:
+            return {
+                ...state,
+                categories: action.categories,
+            }
         case actionTypes.TOGGLE_CART:
             return {
                 ...state,
@@ -109,9 +116,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 showOrderForm: action.showOrderForm,
-                // orderItems: state.cartItems,
             };
-            /*nút bấm Order*/
         case actionTypes.TOGGLE_ORDER:
             return {
                 ...state,
@@ -121,7 +126,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 showMobileNav: action.showMobileNav
-            };    
+            };
+        case actionTypes.SET_FILTER:
+            return {
+                ...state,
+                filter: action.filter,
+            };
         default:
             return state;
     }

@@ -32,7 +32,7 @@ const AddFood = () => {
   const [quantity, setQuantity] = useState("");
   const [description, setDescription] = useState("");
   const [loaderMessage, setLoadermessage] = useState("");
-  const [{ foodItems }, dispatch] = useStateValue();
+  const [{ foodItems, filter }, dispatch] = useStateValue();
 
   const deleteImage = () => {
     setLoadermessage("Removing Photo......");
@@ -66,7 +66,7 @@ const AddFood = () => {
           .then(() => {
             clearForm();
             setLoading(false);
-            fetchFoodData(dispatch);
+            fetchFoodData(dispatch, filter);
           })
           .catch((error) => {
             console.log(error);

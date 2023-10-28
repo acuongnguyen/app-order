@@ -1,10 +1,10 @@
-import { fetchSessionUser, fetchSessionUserMode } from "../utils/fetchSessionData";
+import { fetchSessionUser } from "../utils/fetchSessionData";
 
 const sessionUser = fetchSessionUser();
-const sessionUserMode = fetchSessionUserMode();
 export const initialState = {
     user: sessionUser,
     foodItems: null,
+    categories: null,
     showCart: false,
     showMobileNav: false,
     showOrder: false,
@@ -13,7 +13,7 @@ export const initialState = {
     orderItems: [],
     cartTotal: 0,
     orderTotal: 0,
-    adminMode: sessionUserMode,
+    filter: 'all',
     users: [],
     paymentMethod: 'mobile_money',
     checkoutData: {},

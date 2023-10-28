@@ -15,7 +15,7 @@ import { MdOutlineRestaurantMenu, MdShoppingBasket } from "react-icons/md";
 const Header = () => {
   //
   // const firebaseAuth = getAuth(app);
-  const [{ user, showCart, cartItems, showMobileNav}, dispatch] = useStateValue();
+  const [{ user, showCart, cartItems, showMobileNav }, dispatch] = useStateValue();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMobileNav, setIsOpenMobileNav] = useState(false);
 
@@ -61,7 +61,7 @@ const Header = () => {
               className=" flex items-center justify-center"
             >
               <img
-                src={user.photoURL || Avatar}
+                src={Avatar}
                 className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-2xl rounded-full cursor-pointer object-contain"
                 alt="profile"
               />
@@ -134,7 +134,7 @@ const Header = () => {
                   className="group flex items-center justify-center"
                 >
                   <img
-                    src={user?.photoURL ? user.photoURL : Avatar}
+                    src={Avatar}
                     className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-2xl rounded-full cursor-pointer"
                     alt="user-profile"
                     onClick={() => setIsOpen(!isOpen)}
