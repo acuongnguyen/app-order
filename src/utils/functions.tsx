@@ -1,4 +1,8 @@
-import { FoodItem, cartItem } from "../../types";
+import { FoodItem, cartItem, FoodCategories, FoodCategory } from "../../types";
+import { GiFruitTree, GiChickenOven, GiBeerBottle, GiBowlOfRice } from "react-icons/gi";
+import { MdOutlineIcecream } from "react-icons/md";
+import { FaFish } from "react-icons/fa";
+import { Categories, setCategories } from "./categories";
 import {
   firebaseAddToCart,
   firebaseAddToOrder,
@@ -103,18 +107,27 @@ export const fetchUserCartData = async (user: any, dispatch: any) => {
   }
 };
 
-export const fetchFoodData = async (dispatch: any) => {
+export const fetchFoodDataByFilter = (filter: string): string => {
+  let apiUrl = "https://vtda.online/api/v1/foods/";
+  if (filter) {
+    apiUrl += filter;
+  } else if (filter == 'all') {
+    apiUrl += "7766";
+  }
+  return apiUrl;
+};
+
+
+export const fetchFoodData = async (dispatch: any, filter: string) => {
+  const apiUrl = fetchFoodDataByFilter(filter);
   try {
-    const response = await fetch(
-      "https://vtda.online/api/v1/foods/2377"
-    );
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
 
     const data = await response.json();
-
     dispatch({
       type: "SET_FOOD_ITEMS",
       foodItems: data,
@@ -128,28 +141,55 @@ export const getFoodyById = (menu: FoodItem[], fid: number) => {
   return menu.find((item: FoodItem) => item.id === fid);
 };
 
-//  Update cart item State
-// export const updateCartItemState = async (
-//   cartItems: cartItem[],
-//   item: cartItem,
-//   dispatch: any
-// ) => {
-//   const index = cartItems.findIndex(
-//     (cartItem: cartItem) => cartItem.id === item.id
-//   );
-//   if (index !== -1) {
-//     cartItems[index] = item;
-//   }
-//   dispatch({
-//     type: "SET_CARTITEMS",
-//     cartItems: cartItems,
-//   });
-//   await firebaseUpdateCartItem(item)
-//     .then(() => {})
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// };
+const getIconForCategory = (categoryName: String) => {
+  switch (categoryName.toLowerCase()) {
+    case 'gà':
+      return <GiChickenOven />;
+    case 'cứt':
+      return <GiFruitTree />;
+    case 'lợn nạc':
+      return < GiBowlOfRice />;
+    case 'g':
+      return null;
+    case 'lợn':
+      return <MdOutlineIcecream />;
+    case 'bò':
+      return <GiBowlOfRice />;
+    default:
+      return null;
+  }
+}
+
+export const fetchCategory = async (dispatch: any) => {
+  const apiUrl = 'https://vtda.online/api/v1/categories';
+
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    const mappedCategories: FoodCategories = data.map((category: FoodCategory) => {
+      console.log("icon", category.imageUrl);
+      return {
+        id: category.id,
+        name: category.name,
+        urlParam: category.id,
+        imageUrl: category.imageUrl,
+      };
+    });
+
+    setCategories(mappedCategories);
+    dispatch({
+      type: "SET_CATEGORY",
+      categories: mappedCategories,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // Update Cart Item Quantity
 export const updateCartItemQty = async (

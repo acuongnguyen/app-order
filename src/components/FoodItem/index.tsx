@@ -13,7 +13,7 @@ export const SingleFoodItem = ({
   admin?: boolean;
 }) => {
   const name = item.name;
-  const description = item.description; 
+  const description = item.description;
   const price = item.price;
   const imageUrl = item.imageUrl;
   const productRef = useRef(null);
@@ -41,7 +41,7 @@ export const SingleFoodItem = ({
         <p className="mt-1 text-sm text-gray-500">{description} </p>
         <div className="flex items-center justify-between gap-8 ">
           <p className="text-base text-headingColor font-semibold">
-            <span className="text-sm text-red-600">₵</span> {price}
+            {price} <span className="text-sm text-red-600">đ</span>
           </p>
         </div>
       </div>
