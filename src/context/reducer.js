@@ -17,8 +17,21 @@ export const actionTypes = {
     TOGGLE_ORDER: 'TOGGLE_ORDER',
     TOGGLE_MOBILE_NAV: 'TOGGLE_MOBILE_NAV',
     ADD_TO_ORDER: 'ADD_TO_ORDER',
+    ADD_TO_CART: 'ADD_TO_CART',
     SET_FILTER: 'SET_FILTER',
 }
+export const saveCartItemsToLocalStorage = (cartItems) => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+};
+export const getCartItemsFromLocalStorage = () => {
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    return storedCartItems;
+};
+
+export const mergeCartItems = (currentCartItems, newCartItems) => {
+    const updatedCart = [...currentCartItems, ...newCartItems];
+    return updatedCart;
+};
 
 const reducer = (state, action) => {
     // console.log(action)
@@ -44,10 +57,35 @@ const reducer = (state, action) => {
                 showCart: action.showCart,
             };
         case actionTypes.SET_CARTITEMS:
+            const updatedCart = mergeCartItems(state.cartItems, action.cartItems);
+            saveCartItemsToLocalStorage(updatedCart);
             return {
                 ...state,
-                cartItems: action.cartItems,
+                cartItems: updatedCart,
             };
+        case actionTypes.ADD_TO_CART:
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+            const existingCartItemIndex = state.cartItems.findIndex(item => item.fid === action.cartItem.fid);
+            console.log("existingCartItemIndex", existingCartItemIndex);
+            if (existingCartItemIndex !== -1) {
+                // Nếu sản phẩm đã tồn tại, tạo một bản sao của giỏ hàng hiện có
+                const updatedCartItems = [...state.cartItems];
+                // Tăng số lượng của sản phẩm đó
+                updatedCartItems[existingCartItemIndex].qty += action.cartItem.qty;
+                saveCartItemsToLocalStorage(updatedCartItems);
+                return {
+                    ...state,
+                    cartItems: updatedCartItems,
+                };
+            } else {
+                // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+                const updatedCartItems = [...state.cartItems, action.cartItem];
+                saveCartItemsToLocalStorage(updatedCartItems);
+                return {
+                    ...state,
+                    cartItems: updatedCartItems,
+                };
+            }
         case actionTypes.SET_ORDERITEMS:
             const updatedOrderItems = [...state.orderItems];
             action.orderItems.forEach(newCartItem => {

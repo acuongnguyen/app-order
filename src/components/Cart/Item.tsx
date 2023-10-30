@@ -3,14 +3,15 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
 import { cartItem } from "../../../types";
-import { deleteCartItem, getFoodyById, updateCartItemQty } from "../../utils/functions";
+import { deleteCartItem, formatNumber, getFoodyById, updateCartItemQty } from "../../utils/functions";
 import { useStateValue } from "../../context/StateProvider";
 
 const CartItem = ({ item }: { item: cartItem }) => {
   const [{ foodItems, cartItems }, dispatch] = useStateValue();
   const { id, fid, qty } = item;
   const foodItem = getFoodyById(foodItems, fid);
-
+  const price = foodItem?.price || 0;
+  const formattedPrice = formatNumber(price);
   return (
     <div className="w-full p-1 px-2 rounded-lg bg-cartItem hover:shadow-md flex items-center justify-between gap-2 cursor-pointer ">
       <div className=" flex items-center gap-2">
@@ -23,7 +24,7 @@ const CartItem = ({ item }: { item: cartItem }) => {
         <div className="flex flex-col gap-0 ">
           <p className="text-base text-gray-50">{foodItem?.name}</p>
           <p className="text-sm block text-gray-300 font-semibold">
-            {foodItem?.price} <span className="text-xs text-red-600">đ</span>
+            {formattedPrice} <span className="text-xs text-red-600">đ</span>
           </p>
         </div>
       </div>
