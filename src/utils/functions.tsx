@@ -136,7 +136,10 @@ export const fetchFoodData = async (dispatch: any, filter: string) => {
     console.log(error);
   }
 };
-
+//format total
+export function formatNumber(number: any) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 export const getFoodyById = (menu: FoodItem[], fid: number) => {
   return menu.find((item: FoodItem) => item.id === fid);
 };
@@ -253,9 +256,10 @@ export const calculateCartTotal = (
     const foodItem = getFoodyById(foodItems, item.fid);
     total += item.qty * parseFloat(foodItem?.price || "0");
   });
+  const formattedTotal = formatNumber(total);
   dispatch({
     type: "SET_CART_TOTAL",
-    cartTotal: total.toFixed(0),
+    cartTotal: formattedTotal,
   });
 };
 // Calculate Total Price Round to 2 decimal places

@@ -1,11 +1,13 @@
 import { cartItem } from "../../../types";
-import { getFoodyById } from "../../utils/functions";
+import { formatNumber, getFoodyById } from "../../utils/functions";
 import { useStateValue } from "../../context/StateProvider";
 
 const OrderItem = ({ item }: { item: cartItem }) => {
   const [{ foodItems, cartItems, orderItems }, dispatch] = useStateValue();
   const { id, fid, qty } = item;
   const foodItem = getFoodyById(foodItems, fid);
+  const price = foodItem?.price || 0;
+  const formattedPrice = formatNumber(price);
   return (
     <div className="w-full p-1 px-2 rounded-lg backgroundColor hover:shadow-md flex items-center justify-between gap-2 cursor-pointer" style={{ backgroundColor: '#877c6d' }}>
       <div className=" flex items-center  gap-2 px-2">
@@ -17,7 +19,7 @@ const OrderItem = ({ item }: { item: cartItem }) => {
         <div className="flex flex-col gap-0 ">
           <p className="text-base ">{foodItem?.name}</p>
           <p className="text-sm block text-gray-1 font-semibold">
-            {foodItem?.price}<span className="text-xs text-red-600">đ</span>
+            {formattedPrice}<span className="text-xs text-red-600">đ</span>
           </p>
         </div>
       </div>

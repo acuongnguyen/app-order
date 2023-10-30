@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FoodItem } from "../../../types";
 import { motion } from "framer-motion";
 import Action from "./action";
-
+import { formatNumber } from "../../utils/functions";
 export const SingleFoodItem = ({
   item,
   col,
@@ -14,7 +14,7 @@ export const SingleFoodItem = ({
 }) => {
   const name = item.name;
   const description = item.description;
-  const price = item.price;
+  const price = formatNumber(item.price);
   const imageUrl = item.imageUrl;
   const productRef = useRef(null);
 
