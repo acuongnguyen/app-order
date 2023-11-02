@@ -2,6 +2,7 @@ export const actionTypes = {
     SET_USER: 'SET_USER',
     SET_FOOD_ITEMS: 'SET_FOOD_ITEMS',
     SET_CATEGORY: 'SET_CATEGORY',
+    SET_FOODS_POPULAR: 'SET_FOODS_POPULAR',
     TOGGLE_CART: 'TOGGLE_CART',
     SET_CARTITEMS: 'SET_CARTITEMS',
     SET_ORDERITEMS: 'SET_ORDERITEMS',
@@ -19,7 +20,9 @@ export const actionTypes = {
     ADD_TO_ORDER: 'ADD_TO_ORDER',
     ADD_TO_CART: 'ADD_TO_CART',
     SET_FILTER: 'SET_FILTER',
+    CLEAR_CART: 'CLEAR_CART',
 }
+
 export const saveCartItemsToLocalStorage = (cartItems) => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 };
@@ -29,7 +32,15 @@ export const getCartItemsFromLocalStorage = () => {
 };
 
 export const mergeCartItems = (currentCartItems, newCartItems) => {
-    const updatedCart = [...currentCartItems, ...newCartItems];
+    const updatedCart = [...currentCartItems];
+    newCartItems.forEach(newItem => {
+        const existingItem = updatedCart.find(item => item.id === newItem.id);
+        if (existingItem) {
+            existingItem.quantity += newItem.quantity;
+        } else {
+            updatedCart.push(newItem);
+        }
+    });
     return updatedCart;
 };
 
@@ -42,19 +53,42 @@ const reducer = (state, action) => {
                 user: action.user,
             };
         case actionTypes.SET_FOOD_ITEMS:
+            const newFoodItems = action.foodItems;
+            const currentFood = state.foodItems ? [...state.foodItems] : [];
+            const isItemInCurrentFood = (item) => {
+                return currentFood.some((existingItem) => existingItem.id === item.id);
+            };
+            const updatedFoodItems = newFoodItems.filter((newItem) => !isItemInCurrentFood(newItem));
+            localStorage.setItem('foodItems', JSON.stringify(updatedFoodItems));
             return {
                 ...state,
-                foodItems: action.foodItems,
+                foodItems: currentFood.concat(updatedFoodItems),
+            };
+        case "SET_LOADING":
+            return {
+                ...state,
+                loading: action.loading,
             };
         case actionTypes.SET_CATEGORY:
             return {
                 ...state,
                 categories: action.categories,
             }
+        case actionTypes.SET_FOODS_POPULAR:
+            return {
+                ...state,
+                foodItemsPopular: action.foodItemsPopular,
+            }
         case actionTypes.TOGGLE_CART:
             return {
                 ...state,
                 showCart: action.showCart,
+            };
+
+        case actionTypes.CLEAR_CART:
+            return {
+                ...state,
+                cartItems: [],
             };
         case actionTypes.SET_CARTITEMS:
             const updatedCart = mergeCartItems(state.cartItems, action.cartItems);
@@ -63,29 +97,6 @@ const reducer = (state, action) => {
                 ...state,
                 cartItems: updatedCart,
             };
-        case actionTypes.ADD_TO_CART:
-            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-            const existingCartItemIndex = state.cartItems.findIndex(item => item.fid === action.cartItem.fid);
-            console.log("existingCartItemIndex", existingCartItemIndex);
-            if (existingCartItemIndex !== -1) {
-                // Nếu sản phẩm đã tồn tại, tạo một bản sao của giỏ hàng hiện có
-                const updatedCartItems = [...state.cartItems];
-                // Tăng số lượng của sản phẩm đó
-                updatedCartItems[existingCartItemIndex].qty += action.cartItem.qty;
-                saveCartItemsToLocalStorage(updatedCartItems);
-                return {
-                    ...state,
-                    cartItems: updatedCartItems,
-                };
-            } else {
-                // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
-                const updatedCartItems = [...state.cartItems, action.cartItem];
-                saveCartItemsToLocalStorage(updatedCartItems);
-                return {
-                    ...state,
-                    cartItems: updatedCartItems,
-                };
-            }
         case actionTypes.SET_ORDERITEMS:
             const updatedOrderItems = [...state.orderItems];
             action.orderItems.forEach(newCartItem => {
