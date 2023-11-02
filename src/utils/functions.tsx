@@ -106,7 +106,36 @@ export const fetchUserCartData = async (user: any, dispatch: any) => {
     localStorage.setItem("cartItems", "undefined");
   }
 };
+export const fetchFoodPopular = async (dispatch: any) => {
+  const apiUrl = 'https://vtda.online/api/v1/foods/popular';
 
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    dispatch({
+      type: "SET_FOODS_POPULAR",
+      foodItemsPopular: data,
+    });
+
+    // Cập nhật trạng thái loading sau khi fetch dữ liệu xong
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  } catch (error) {
+    console.log(error);
+    // Cập nhật trạng thái loading nếu có lỗi
+    dispatch({
+      type: "SET_LOADING",
+      loading: false,
+    });
+  }
+};
 export const fetchFoodDataByFilter = (filter: string): string => {
   let apiUrl = "https://vtda.online/api/v1/foods/";
   if (filter) {

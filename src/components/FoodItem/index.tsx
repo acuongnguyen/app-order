@@ -3,10 +3,11 @@ import { FoodItem } from "../../../types";
 import { motion } from "framer-motion";
 import Action from "./action";
 import { formatNumber } from "../../utils/functions";
+
 export const SingleFoodItem = ({
   item,
   col,
-  admin
+  admin,
 }: {
   item: FoodItem;
   col?: boolean;
@@ -29,14 +30,15 @@ export const SingleFoodItem = ({
         <motion.img
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 1.1 }}
-          className="w-40 h-40 md:w-48 md:h-40 -mt-8 object-contain cursor-pointer"
+          className="w-40 h-40 md:w-48 md:h-40 -mt-0 object-cover rounded cursor-pointer"
           alt={description}
           src={imageUrl}
           ref={productRef}
         />
+
         <Action food={item} admin={admin} productRef={productRef} />
       </div>
-      <div className="w-full flex items-end justify-end flex-col">
+      <div className="w-full flex items-end justify-end flex-col ">
         <p className="text-textColor font-semi-bold text-lg">{name}</p>
         <p className="mt-1 text-sm text-gray-500">{description} </p>
         <div className="flex items-center justify-between gap-8 ">

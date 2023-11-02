@@ -12,51 +12,57 @@ const CartItem = ({ item }: { item: cartItem }) => {
   const foodItem = getFoodyById(foodItems, fid);
   const price = foodItem?.price || 0;
   const formattedPrice = formatNumber(price);
+
   return (
-    <div className="w-full p-1 px-2 rounded-lg bg-cartItem hover:shadow-md flex items-center justify-between gap-2 cursor-pointer ">
-      <div className=" flex items-center gap-2">
-        <img
-          src={foodItem?.imageUrl}
-          alt=""
-          className="w-20 h-20 max-w-[60px] rounded-full object-contain"
-        />
+    <>
+      <div className="w-full p-1 px-2 rounded-lg backgroundColor hover:shadow-md flex items-center justify-between gap-2 cursor-pointer " style={{ backgroundColor: 'white ' }}>
+        <div className=" flex items-center gap-2">
+          <img
+            src={foodItem?.imageUrl}
+            alt=""
+            className="w-20 h-20 max-w-[60px] rounded-full object-contain"
+          />
 
-        <div className="flex flex-col gap-0 ">
-          <p className="text-base text-gray-50">{foodItem?.name}</p>
-          <p className="text-sm block text-gray-300 font-semibold">
-            {formattedPrice} <span className="text-xs text-red-600">đ</span>
-          </p>
+          <div className="flex flex-col gap-0 ">
+            <p className="text-base ">{foodItem?.name}</p>
+            <p className="text-sm block text-base font-semibold">
+              {formattedPrice} <span className="text-xs text-red-600">đ</span>
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className="group flex items-center gap-2  cursor-pointer">
+        <div className="flex flex-row">
+          <motion.div
+            className="w-6 h-6 rounded-full flex items-center justify-center backgroundColor"
+            whileTap={{ scale: 0.75 }}
+            onClick={qty > 1 ? () => updateCartItemQty(cartItems, foodItems, item, dispatch, -1) : () => { }}
+            style={{ backgroundColor: '#EBEBEB' }}
+          >
+            <BiMinus className="text-base" />
+          </motion.div>
+          <p className="text-lg font-semibold w-6 h-6 ml-2 mr-2 rounded-sm backgroundColor flex items-center justify-center cursor-default" style={{ backgroundColor: 'white' }}>
+            {qty}
+          </p>
+          <motion.div
+            className="w-6 h-6 rounded-full flex items-center justify-center backgroundColor"
+            whileTap={{ scale: 0.75 }}
+            onClick={() => updateCartItemQty(cartItems, foodItems, item, dispatch, 1)}
+            style={{ backgroundColor: '#EBEBEB' }}
+          >
+            <BiPlus className="text-base" />
+          </motion.div>
+        </div>
+
         <motion.div
-          className=""
           whileTap={{ scale: 0.75 }}
-          onClick={qty > 1 ? () => updateCartItemQty(cartItems, foodItems, item, dispatch, -1) : () => { }}
+          className="text-sm text-gray-50 w-6 h-6 rounded-lg bg-cartNumBg flex items-center justify-center"
+          onClick={() => deleteCartItem(cartItems, foodItems, item, dispatch)}
         >
-          <BiMinus className="text-gray-50" />
-        </motion.div>
-        <p className="text-sm text-gray-50 w-5 h-5 rounded-sm bg-cartBg flex items-center justify-center cursor-default">
-          {qty}
-        </p>
-        <motion.div
-          className=""
-          whileTap={{ scale: 0.75 }}
-          onClick={() => updateCartItemQty(cartItems, foodItems, item, dispatch, 1)}
-        >
-          <BiPlus className="text-gray-50" />
+          <MdDelete />
         </motion.div>
       </div>
-
-      <motion.div
-        whileTap={{ scale: 0.75 }}
-        className="text-sm text-gray-50 w-6 h-6 rounded-lg bg-cartNumBg flex items-center justify-center"
-        onClick={() => deleteCartItem(cartItems, foodItems, item, dispatch)}
-      >
-        <MdDelete />
-      </motion.div>
-    </div>
+      <div className="w-full border-b border-gray-300 my-"></div>
+    </>
   );
 };
 
