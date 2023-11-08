@@ -41,7 +41,7 @@ const ProviderAuth = () => {
           dispatch({
             type: "CLEAR_CART",
           });
-          fetchUserCartData(user, dispatch);
+          // fetchUserCartData(user, dispatch);
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/");
         })
