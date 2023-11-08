@@ -13,10 +13,6 @@ const Menu = ({ title }: { title?: string }) => {
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
-    fetchCategory(dispatch);
-  }, [dispatch]);
-
-  useEffect(() => {
     if (!filter && categories && categories.length > 0) {
       setFilter(categories[0].id);
     }
