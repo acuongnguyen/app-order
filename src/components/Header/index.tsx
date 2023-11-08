@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useStateValue } from "../../context/StateProvider";
 import { MdOutlineRestaurantMenu, MdShoppingBasket } from "react-icons/md";
 const Header = () => {
-  //
   // const firebaseAuth = getAuth(app);
   const [{ user, showCart, cartItems, showMobileNav }, dispatch] = useStateValue();
   const [isOpen, setIsOpen] = useState(false);

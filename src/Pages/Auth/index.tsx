@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Cheff1 } from "../../components/Assets";
 import {
-  // GithubAuthProvider,
+  GithubAuthProvider,
   GoogleAuthProvider,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ import { fetchUserCartData } from "../../utils/functions";
 
 const ProviderAuth = () => {
   const GOOGLE_PROVIDER = new GoogleAuthProvider();
-  // const GITHUB_PROVIDER = new GithubAuthProvider();
+  const GITHUB_PROVIDER = new GithubAuthProvider();
   const [{ user }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
@@ -54,15 +54,16 @@ const ProviderAuth = () => {
       <motion.p
         whileHover={{ scale: 1.1 }}
         className="flex items-center w-36 h-10 bg-white justify-center rounded text-headingColor px-5 cursor-pointer shadow-sm hover:bg-slate-100"
-        onClick={() =>
-          toast.warn("GitHub Signin is not available yet", {
-            autoClose: 2000,
-            icon: (
-              <MdOutlineNotificationsActive className="text-yellow-500 text-xl" />
-            ),
-            toastId: "github",
-          })
-        }
+        onClick={() => AUTH({ provider: GITHUB_PROVIDER })}
+      // onClick={() =>
+      //   toast.warn("GitHub Signin is not available yet", {
+      //     autoClose: 2000,
+      //     icon: (
+      //       <MdOutlineNotificationsActive className="text-yellow-500 text-xl" />
+      //     ),
+      //     toastId: "github",
+      //   })
+      // }
       >
         <BsGithub className="text-xl w-5 mr-1" />
         <span>Github</span>

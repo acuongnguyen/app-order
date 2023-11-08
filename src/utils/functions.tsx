@@ -77,6 +77,48 @@ export const addToOrder = (
   calculateOrderTotal(cartItems, foodItems, currentOrderTotal, dispatch);
 };
 
+// export const addToOrder = async (
+//   cartItems: cartItem[],
+//   foodItems: FoodItem[],
+//   currentOrderTotal: string,
+//   dispatch: any,
+// ) => {
+//   if (!cartItems || cartItems.length === 0) {
+//     toast.error("No items in the cart to add to order", {
+//       icon: <MdShoppingBasket className="text-2xl text-cartNumBg" />,
+//       toastId: "emptyCart",
+//     });
+//     return;
+//   }
+//   dispatch({
+//     type: "SET_ORDERITEMS",
+//     orderItems: cartItems,
+//   });
+//   calculateOrderTotal(cartItems, foodItems, currentOrderTotal, dispatch);
+//   try {
+//     const response = await fetch('https://vtda.online/api/v1/orders?tableId=1234', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(cartItems),
+//     });
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       dispatch({
+//         type: "CLEAR_CART",
+//       });
+//       calculateOrderTotal(cartItems, foodItems, currentOrderTotal, dispatch);
+//     } else {
+//       throw new Error('Failed to create order');
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//     toast.error("Failed to create order. Please try again later.");
+//   }
+// };
+
 export const dispatchtUserCartItems = (
   uid: string,
   items: cartItem[],
