@@ -9,7 +9,12 @@ import { isAdmin, logout, ToggleAdminMode } from "../../utils/functions";
 const DropDown = ({ user }: { user: any; }) => {
   const navigate = useNavigate();
   const [{ }, dispatch] = useStateValue();
-
+  const handleLogout = () => {
+    dispatch({
+      type: "CLEAR_CART",
+    });
+    logout(user, dispatch, navigate);
+  }
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.6 }}
@@ -35,7 +40,7 @@ const DropDown = ({ user }: { user: any; }) => {
       </Link>
       <p
         className="cursor-pointer px-10 py-2 flex items-center gap-3 hover:bg-slate-100 transition-all duration-100 ease-in-out text-base text-textColor"
-        onClick={() => logout(user, dispatch, navigate)}
+        onClick={() => handleLogout()}
       >
         Logout
         <MdLogout />

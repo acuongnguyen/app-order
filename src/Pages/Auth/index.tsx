@@ -38,6 +38,9 @@ const ProviderAuth = () => {
             type: "SET_USER",
             user: user,
           });
+          dispatch({
+            type: "CLEAR_CART",
+          });
           fetchUserCartData(user, dispatch);
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/");
@@ -54,16 +57,16 @@ const ProviderAuth = () => {
       <motion.p
         whileHover={{ scale: 1.1 }}
         className="flex items-center w-36 h-10 bg-white justify-center rounded text-headingColor px-5 cursor-pointer shadow-sm hover:bg-slate-100"
-        onClick={() => AUTH({ provider: GITHUB_PROVIDER })}
-      // onClick={() =>
-      //   toast.warn("GitHub Signin is not available yet", {
-      //     autoClose: 2000,
-      //     icon: (
-      //       <MdOutlineNotificationsActive className="text-yellow-500 text-xl" />
-      //     ),
-      //     toastId: "github",
-      //   })
-      // }
+        // onClick={() => AUTH({ provider: GITHUB_PROVIDER })}
+        onClick={() =>
+          toast.warn("GitHub Signin is not available yet", {
+            autoClose: 2000,
+            icon: (
+              <MdOutlineNotificationsActive className="text-yellow-500 text-xl" />
+            ),
+            toastId: "github",
+          })
+        }
       >
         <BsGithub className="text-xl w-5 mr-1" />
         <span>Github</span>

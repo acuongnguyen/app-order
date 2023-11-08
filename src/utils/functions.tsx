@@ -135,15 +135,15 @@ export const dispatchtUserCartItems = (
 
 export const fetchUserCartData = async (user: any, dispatch: any) => {
   if (user) {
-    await firebaseFetchAllCartItems()
-      .then((data) => {
-        const userCart = dispatchtUserCartItems(user.uid, data, dispatch);
-        localStorage.setItem("cartItems", JSON.stringify(userCart));
-      })
-      .then(() => { })
-      .catch((e) => {
-        console.log(e);
-      });
+    // await firebaseFetchAllCartItems()
+    //   .then((data) => {
+    //     const userCart = dispatchtUserCartItems(user.uid, data, dispatch);
+    //     localStorage.setItem("cartItems", JSON.stringify(userCart));
+    //   })
+    //   .then(() => { })
+    //   .catch((e) => {
+    //     console.log(e);
+    // });
   } else {
     localStorage.setItem("cartItems", "undefined");
   }
