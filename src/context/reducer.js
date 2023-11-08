@@ -21,15 +21,8 @@ export const actionTypes = {
     ADD_TO_CART: 'ADD_TO_CART',
     SET_FILTER: 'SET_FILTER',
     CLEAR_CART: 'CLEAR_CART',
+    CLEAR_ORDER: 'CLEAR_ORDER',
 }
-
-export const saveCartItemsToLocalStorage = (cartItems) => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-};
-export const getCartItemsFromLocalStorage = () => {
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    return storedCartItems;
-};
 
 export const mergeCartItems = (currentCartItems, newCartItems) => {
     const updatedCart = [...currentCartItems];
@@ -59,7 +52,7 @@ const reducer = (state, action) => {
                 return currentFood.some((existingItem) => existingItem.id === item.id);
             };
             const updatedFoodItems = newFoodItems.filter((newItem) => !isItemInCurrentFood(newItem));
-            localStorage.setItem('foodItems', JSON.stringify(updatedFoodItems));
+            // localStorage.setItem('foodItems', JSON.stringify(updatedFoodItems));
             return {
                 ...state,
                 foodItems: currentFood.concat(updatedFoodItems),
@@ -90,9 +83,13 @@ const reducer = (state, action) => {
                 ...state,
                 cartItems: [],
             };
+        case actionTypes.CLEAR_Order:
+            return {
+                ...state,
+                orderItems: [],
+            };
         case actionTypes.SET_CARTITEMS:
             const updatedCart = mergeCartItems(state.cartItems, action.cartItems);
-            saveCartItemsToLocalStorage(updatedCart);
             return {
                 ...state,
                 cartItems: updatedCart,
