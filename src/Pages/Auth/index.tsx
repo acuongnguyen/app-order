@@ -42,6 +42,7 @@ const ProviderAuth = () => {
             type: "CLEAR_CART",
           });
           // fetchUserCartData(user, dispatch);
+
           localStorage.setItem("user", JSON.stringify(user));
           navigate("/");
         })
