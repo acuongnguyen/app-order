@@ -163,8 +163,10 @@ export const fetchFoodPopular = async (dispatch: any) => {
       type: "SET_FOODS_POPULAR",
       foodItemsPopular: data,
     });
-
-    // Cập nhật trạng thái loading sau khi fetch dữ liệu xong
+    dispatch({
+      type: "SET_FOOD_ITEMS",
+      foodItems: data,
+    });
     dispatch({
       type: "SET_LOADING",
       loading: false,
@@ -182,8 +184,6 @@ export const fetchFoodDataByFilter = (filter: string): string => {
   let apiUrl = "https://vtda.online/api/v1/foods/";
   if (filter) {
     apiUrl += filter;
-  } else if (filter == 'all') {
-    apiUrl += "7766";
   }
   return apiUrl;
 };
@@ -214,25 +214,6 @@ export function formatNumber(number: any) {
 export const getFoodyById = (menu: FoodItem[], fid: number) => {
   return menu.find((item: FoodItem) => item.id === fid);
 };
-
-const getIconForCategory = (categoryName: String) => {
-  switch (categoryName.toLowerCase()) {
-    case 'gà':
-      return <GiChickenOven />;
-    case 'cứt':
-      return <GiFruitTree />;
-    case 'lợn nạc':
-      return < GiBowlOfRice />;
-    case 'g':
-      return null;
-    case 'lợn':
-      return <MdOutlineIcecream />;
-    case 'bò':
-      return <GiBowlOfRice />;
-    default:
-      return null;
-  }
-}
 
 export const fetchCategory = async (dispatch: any) => {
   const apiUrl = 'https://vtda.online/api/v1/categories';
