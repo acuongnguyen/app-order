@@ -22,7 +22,7 @@ body {
 body::-webkit-scrollbar {
     width: 0.4em;
     border-radius: 50vh;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 body::-webkit-scrollbar-track {

@@ -18,6 +18,9 @@ const Menu = ({ title }: { title?: string }) => {
     }
   }, [categories]);
 
+  // useEffect(() => {
+  //   fetchCategory(dispatch);
+  // }, [dispatch]);
 
   useEffect(() => {
     // Fetch dữ liệu mỗi khi filter thay đổi

@@ -180,17 +180,9 @@ export const fetchFoodPopular = async (dispatch: any) => {
     });
   }
 };
-export const fetchFoodDataByFilter = (filter: string): string => {
-  let apiUrl = "https://vtda.online/api/v1/foods/";
-  if (filter) {
-    apiUrl += filter;
-  }
-  return apiUrl;
-};
-
 
 export const fetchFoodData = async (dispatch: any, filter: string) => {
-  const apiUrl = fetchFoodDataByFilter(filter);
+  const apiUrl = `https://vtda.online/api/v1/foods/${filter}`;
   try {
     const response = await fetch(apiUrl);
 
@@ -217,7 +209,7 @@ export const getFoodyById = (menu: FoodItem[], fid: number) => {
 
 export const fetchCategory = async (dispatch: any) => {
   const apiUrl = 'https://vtda.online/api/v1/categories';
-
+  console.log("1");
   try {
     const response = await fetch(apiUrl);
 
@@ -227,7 +219,6 @@ export const fetchCategory = async (dispatch: any) => {
 
     const data = await response.json();
     const mappedCategories: FoodCategories = data.map((category: FoodCategory) => {
-      console.log("icon", category.imageUrl);
       return {
         id: category.id,
         name: category.name,
@@ -322,7 +313,6 @@ export const calculateOrderTotal = (
   dispatch: any
 ) => {
   let total = parseFloat(currentOrderTotal);
-  console.log("currentOrderTotal", currentOrderTotal);
   newOrderItems.forEach((item: cartItem) => {
     const foodItem = getFoodyById(foodItems, item.fid);
     total += item.qty * parseFloat(foodItem?.price || "0");

@@ -16,8 +16,9 @@ const Button = ({
     <motion.div
       // onClick={() => setFilter(category.urlParam)}
       onClick={() => {
-        setFilter(category.urlParam);
-        dispatch({ type: 'SET_FILTER', filter: category.urlParam });
+        // setFilter(category.urlParam);
+        // dispatch({ type: 'SET_FILTER', filter: category.urlParam });
+        setFilter(category.id);
       }}
       //   whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 1.1 }}

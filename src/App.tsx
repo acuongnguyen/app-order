@@ -31,8 +31,10 @@ function App() {
     useStateValue();
 
   useEffect(() => {
+    console.log("2");
     fetchCategory(dispatch);
-    fetchFoodData(dispatch, filter);
+
+    // fetchFoodData(dispatch, filter);
     user && fetchUserCartData(user, dispatch);
     if (showOrderForm) {
       dispatch({ type: 'SHOW_ORDER_FORM', showOrderForm: false });
@@ -45,37 +47,40 @@ function App() {
       calculateCartTotal(cartItems, foodItems, dispatch);
   }, [cartItems, foodItems, dispatch]);
   return (
-    <AnimatePresence exitBeforeEnter>
-      <ToastContainer />
-      <div className="w-screen h-auto min-h-[100vh] flex flex-col bg-primary">
-        {showCart && <Cart />}
-        {showOrderForm && <Order />}
-        {showOrder && <Order />}
-        {showMobileNav && <Header />}
-        {!(adminMode && isAdmin(user)) && <Header />}
-        <main
-          className={`${!(adminMode && isAdmin(user)) &&
-            "mt-16 md:mt-16 px-3 md:px-8 md:py-6 py-4"
-            } w-full h-auto`}
-          onClick={() => { }}
-        >
-          {/* Routes */}
-          <Routes>
-            <Route path="/*" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Signup />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/services" element={<Services />} />
-          </Routes>
+    <>
+      <AnimatePresence exitBeforeEnter>
+        <ToastContainer />
+        <div className="w-screen h-auto min-h-[100vh] flex flex-col bg-primary">
+          {showCart && <Cart />}
+          {showOrderForm && <Order />}
+          {showOrder && <Order />}
+          {showMobileNav && <Header />}
+          {!(adminMode && isAdmin(user)) && <Header />}
+          <main
+            className={`${!(adminMode && isAdmin(user)) &&
+              "mt-16 md:mt-16 px-3 md:px-8 md:py-6 py-4"
+              } w-full h-auto`}
+            onClick={() => { }}
+          >
+            {/* Routes */}
+            <Routes>
+              <Route path="/*" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Signup />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/services" element={<Services />} />
+            </Routes>
 
-          {!(adminMode && isAdmin(user)) && <Footer />}
-        </main>
-      </div>
-    </AnimatePresence>
+            {!(adminMode && isAdmin(user)) && <Footer />}
+          </main>
+        </div>
+      </AnimatePresence>
+    </>
   );
+
 }
 
 export default App;

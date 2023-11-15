@@ -4,7 +4,7 @@ const sessionUser = fetchSessionUser();
 export const initialState = {
     user: sessionUser,
     foodItems: null,
-    categories: null,
+    categories: [],
     showCart: false,
     showMobileNav: false,
     showOrder: false,
