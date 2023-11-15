@@ -19,7 +19,6 @@ export const actionTypes = {
     TOGGLE_MOBILE_NAV: 'TOGGLE_MOBILE_NAV',
     ADD_TO_ORDER: 'ADD_TO_ORDER',
     ADD_TO_CART: 'ADD_TO_CART',
-    SET_FILTER: 'SET_FILTER',
     CLEAR_CART: 'CLEAR_CART',
     CLEAR_ORDER: 'CLEAR_ORDER',
 }
@@ -172,11 +171,6 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 showMobileNav: action.showMobileNav
-            };
-        case actionTypes.SET_FILTER:
-            return {
-                ...state,
-                filter: action.filter,
             };
         default:
             return state;

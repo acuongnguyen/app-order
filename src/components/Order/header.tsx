@@ -20,7 +20,8 @@ const OrderHeader = () => {
       <motion.p
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 0.9 }}
-        className="flex items-center justify-center gap-2 p-1 px-2 my-2 bg-cardOverlay rounded-md hover:shadow-sm text-textColor text-base"
+        className="flex items-center justify-center gap-2 p-1 px-2 my-2 bg-cardOverlay rounded-md hover:shadow-sm text-textColor text-base backgroundColor"
+        style={{ backgroundColor: '#EBEBEB' }}
       >
       </motion.p>
     </div>
